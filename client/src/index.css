@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/* ===== الهوية البصرية (RTL + ألوان مؤسسية) ===== */
+@theme {
+  --font-sans: "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+
+  /* الألوان الرئيسية */
+  --color-navy: #1f3864;
+  --color-navy-700: #2a4a82;
+  --color-navy-50: #eef2fa;
+  --color-gold: #c9a94e;
+  --color-gold-600: #b3923a;
+  --color-canvas: #f8f9fc;
+
+  /* ألوان الحالات (نص + خلفية) */
+  --color-status-done: #10b981;
+  --color-status-done-bg: #d4edda;
+  --color-status-progress: #3b82f6;
+  --color-status-progress-bg: #d6e4ff;
+  --color-status-late: #f59e0b;
+  --color-status-late-bg: #ffe0b2;
+  --color-status-notstarted: #9ca3af;
+  --color-status-notstarted-bg: #f0f0f0;
+  --color-status-postponed: #ef4444;
+  --color-status-postponed-bg: #f8d7da;
+
+  /* مستويات الخطورة */
+  --color-risk-low: #10b981;
+  --color-risk-mid: #f59e0b;
+  --color-risk-high: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-canvas);
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* أرقام لاتينية متناسقة داخل النص العربي */
+/* أرقام لاتينية متناسقة بدون كسر تخطيط الجداول (لا نضع display:inline-block
+   لأنه يحوّل خلايا <td> إلى inline-block ويُفسد محاذاة الأعمدة) */
+.nums {
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* شريط تمرير لطيف */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* حركات دقيقة */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.35s ease-out both;
+}
+
+/* تنسيق Markdown داخل فقاعة المساعد */
+.prose-chat :where(p) {
+  margin: 0.25rem 0;
+  line-height: 1.7;
+}
+.prose-chat :where(ul, ol) {
+  margin: 0.4rem 0;
+  padding-inline-start: 1.2rem;
+}
+.prose-chat :where(li) {
+  margin: 0.15rem 0;
+}
+.prose-chat :where(h1, h2, h3) {
+  font-weight: 700;
+  margin: 0.5rem 0 0.25rem;
+  color: #1f3864;
+}
+.prose-chat :where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+}
+.prose-chat :where(th, td) {
+  border: 1px solid #e2e8f0;
+  padding: 0.3rem 0.5rem;
+  text-align: right;
+}
+.prose-chat :where(th) {
+  background: #eef2fa;
+  font-weight: 600;
+}
+.prose-chat :where(code) {
+  background: #e2e8f0;
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.prose-chat :where(strong) {
+  color: #1f3864;
+}
+
+@keyframes pulseSoft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+.animate-pulse-soft {
+  animation: pulseSoft 1.4s ease-in-out infinite;
+}
