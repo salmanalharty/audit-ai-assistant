@@ -17,6 +17,17 @@ export function formatDate(d: Date | null): string {
   return `${day}/${month}/${year}`;
 }
 
+/**
+ * تاريخ محلي DD/MM/YYYY — للطوابع الزمنية اللحظية التي ينشئها المستخدم
+ * (تذكير/إغلاق). `formatDate` أعلاه يستخدم UTC لأنه يعرض تواريخ الإكسل
+ * المخزّنة كمنتصف ليل UTC؛ خلطهما يُنتج فرق يوم في المناطق الزمنية الموجبة.
+ */
+export function formatLocalDate(d: Date | null): string {
+  if (!d) return "—";
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${p(d.getDate())}/${p(d.getMonth() + 1)}/${d.getFullYear()}`;
+}
+
 /** عرض نسبة مئوية من كسر 0..1 */
 export function formatPercent(fraction: number, digits = 0): string {
   if (typeof fraction !== "number" || !isFinite(fraction)) return "0%";

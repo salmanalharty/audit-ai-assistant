@@ -1,11 +1,19 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Table2, GitCompareArrows, ClipboardList, Sparkles } from "lucide-react";
+import {
+  LayoutDashboard,
+  Table2,
+  GitCompareArrows,
+  ClipboardList,
+  ListChecks,
+  Sparkles,
+} from "lucide-react";
 
 const links = [
-  { to: "/", label: "لوحة التحكم", icon: LayoutDashboard, end: true },
-  { to: "/plan", label: "خطة المراجعة", icon: Table2, end: false },
-  { to: "/comparison", label: "المقارنة والتحليل", icon: GitCompareArrows, end: false },
-  { to: "/follow-up", label: "تقرير المتابعة", icon: ClipboardList, end: false },
+  { to: "/", label: "لوحة التحكم", icon: LayoutDashboard, end: true, short: "اللوحة" },
+  { to: "/plan", label: "خطة المراجعة", icon: Table2, end: false, short: "الخطة" },
+  { to: "/comparison", label: "المقارنة والتحليل", icon: GitCompareArrows, end: false, short: "المقارنة" },
+  { to: "/follow-up", label: "تقرير المتابعة", icon: ClipboardList, end: false, short: "المتابعة" },
+  { to: "/actions", label: "الإجراءات التصحيحية", icon: ListChecks, end: false, short: "الإجراءات" },
 ];
 
 /** الشريط الجانبي (يمين، RTL) — يظهر على الشاشات المتوسطة فأكبر */
@@ -53,19 +61,19 @@ export function Sidebar() {
 export function BottomNav() {
   return (
     <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-slate-200 flex justify-around py-1.5">
-      {links.map(({ to, label, icon: Icon, end }) => (
+      {links.map(({ to, short, icon: Icon, end }) => (
         <NavLink
           key={to}
           to={to}
           end={end}
           className={({ isActive }) =>
-            `flex flex-col items-center gap-0.5 px-3 py-1 text-[11px] ${
+            `flex flex-col items-center gap-0.5 px-2 py-1 text-[10px] ${
               isActive ? "text-navy font-semibold" : "text-slate-400"
             }`
           }
         >
-          <Icon size={20} />
-          {label}
+          <Icon size={19} />
+          {short}
         </NavLink>
       ))}
     </nav>

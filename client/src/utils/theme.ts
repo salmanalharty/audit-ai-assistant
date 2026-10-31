@@ -2,6 +2,7 @@
 // (badges، رسوم، جداول) لضمان الاتساق البصري.
 import type { AuditStatus, AuditType, RiskLevel, AuditPhase } from "../types/audit";
 import type { ObsStatus, FollowUpCategory } from "../types/followup";
+import type { ActionState, ActionEventType } from "../types/actions";
 
 export const STATUS_COLORS: Record<
   AuditStatus,
@@ -37,6 +38,23 @@ export const CATEGORY_COLORS: Record<FollowUpCategory, { text: string; bg: strin
   "ضمن المهلة": { text: "#1d4ed8", bg: "#d6e4ff", hex: "#3b82f6" },
   مؤجلة: { text: "#b45309", bg: "#ffe0b2", hex: "#f59e0b" },
   متأخرة: { text: "#b91c1c", bg: "#fde2e2", hex: "#ef4444" },
+};
+
+export const ACTION_STATE_COLORS: Record<ActionState, { text: string; bg: string; hex: string }> = {
+  "قيد التنفيذ": { text: "#1d4ed8", bg: "#d6e4ff", hex: "#3b82f6" },
+  مغلقة: { text: "#0f7a55", bg: "#d4edda", hex: "#10b981" },
+  "مصعّدة": { text: "#b91c1c", bg: "#fde2e2", hex: "#ef4444" },
+};
+
+/** ألوان أنواع أحداث سجل التدقيق — مطابقة لألوان أزرار الإجراءات */
+export const EVENT_COLORS: Record<ActionEventType, string> = {
+  تذكير: "#7c3aed",
+  تمديد: "#475569",
+  "تصعيد": "#dc2626",
+  "إغلاق": "#10b981",
+  "إعادة فتح": "#3b82f6",
+  "استيراد": "#c9a94e",
+  "فحص أدلة": "#0891b2",
 };
 
 export const TYPE_COLORS: Record<AuditType, string> = {

@@ -10,6 +10,7 @@ const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const AuditPlanPage = lazy(() => import("./pages/AuditPlanPage"));
 const ComparisonPage = lazy(() => import("./pages/ComparisonPage"));
 const FollowUpPage = lazy(() => import("./pages/FollowUpPage"));
+const ActionsPage = lazy(() => import("./pages/ActionsPage"));
 
 function ErrorBanner({ message }: { message: string }) {
   return (
@@ -42,6 +43,7 @@ export default function App() {
                 <Route path="/plan" element={<AuditPlanPage />} />
                 <Route path="/comparison" element={<ComparisonPage />} />
                 <Route path="/follow-up" element={<FollowUpPage />} />
+                <Route path="/actions" element={<ActionsPage />} />
               </Routes>
             </Suspense>
           )}

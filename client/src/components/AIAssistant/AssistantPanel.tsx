@@ -4,10 +4,13 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Sparkles, Send, X, MessageSquare, Loader2 } from "lucide-react";
 import { useAuditStore, selectYearOps } from "../../store/auditStore";
+import { useActionsStore } from "../../store/actionsStore";
+import { effectiveActions } from "../../utils/workflow";
 import {
   askClaude,
   buildSystemPrompt,
   buildFollowUpSystemPrompt,
+  buildActionsSystemPrompt,
   type ChatMessage,
 } from "../../services/chatApi";
 
@@ -21,6 +24,14 @@ function quickPrompts(year: number): string[] {
     "اكتب ملخصاً تنفيذياً لحالة الخطة",
   ];
 }
+
+const ACTIONS_PROMPTS = [
+  "ما الإجراءات التي تحتاج تصعيداً الآن ولماذا؟",
+  "رتّب الإجراءات المتأخرة حسب الأولوية",
+  "أي إدارة عليها أكبر عبء إجراءات مفتوحة؟",
+  "لخّص حالة الإجراءات التصحيحية في فقرة تنفيذية",
+  "ما الإجراءات الجاهزة للإغلاق؟",
+];
 
 const FOLLOWUP_PROMPTS = [
   "ما أكثر الإدارات تأخراً في إغلاق الملاحظات؟",
@@ -43,13 +54,19 @@ export function AssistantPanel() {
   const type = useAuditStore((s) => s.type);
   const status = useAuditStore((s) => s.status);
 
+  const records = useActionsStore((s) => s.records);
+  const events = useActionsStore((s) => s.events);
+  const imported = useActionsStore((s) => s.imported);
+
   const location = useLocation();
   const isFollowUp = location.pathname === "/follow-up";
+  const isActions = location.pathname === "/actions";
 
-  const chips = useMemo(
-    () => (isFollowUp ? FOLLOWUP_PROMPTS : quickPrompts(year)),
-    [isFollowUp, year]
-  );
+  const chips = useMemo(() => {
+    if (isActions) return ACTIONS_PROMPTS;
+    if (isFollowUp) return FOLLOWUP_PROMPTS;
+    return quickPrompts(year);
+  }, [isActions, isFollowUp, year]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -63,9 +80,14 @@ export function AssistantPanel() {
     setInput("");
     setLoading(true);
     try {
-      const system = isFollowUp
-        ? buildFollowUpSystemPrompt(followUp)
-        : buildSystemPrompt(ops, year, { type, status });
+      const system = isActions
+        ? buildActionsSystemPrompt(
+            effectiveActions([...followUp, ...imported], records, new Date()),
+            events
+          )
+        : isFollowUp
+          ? buildFollowUpSystemPrompt(followUp)
+          : buildSystemPrompt(ops, year, { type, status });
       const reply = await askClaude(system, history);
       setMessages([...history, { role: "assistant", content: reply }]);
     } catch (e) {

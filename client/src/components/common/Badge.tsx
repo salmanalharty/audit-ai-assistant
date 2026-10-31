@@ -1,5 +1,6 @@
 import type { AuditStatus, RiskLevel, AuditPhase, AuditType } from "../../types/audit";
 import type { ObsStatus, FollowUpCategory } from "../../types/followup";
+import type { ActionState } from "../../types/actions";
 import {
   STATUS_COLORS,
   RISK_COLORS,
@@ -7,6 +8,7 @@ import {
   TYPE_COLORS,
   OBS_STATUS_COLORS,
   CATEGORY_COLORS,
+  ACTION_STATE_COLORS,
 } from "../../utils/theme";
 
 function Pill({ text, c }: { text: string; c: { text: string; bg: string } }) {
@@ -22,6 +24,10 @@ function Pill({ text, c }: { text: string; c: { text: string; bg: string } }) {
 
 export function ObsStatusBadge({ status }: { status: ObsStatus }) {
   return <Pill text={status} c={OBS_STATUS_COLORS[status] ?? { text: "#374151", bg: "#e5e7eb" }} />;
+}
+
+export function ActionStateBadge({ state }: { state: ActionState }) {
+  return <Pill text={state} c={ACTION_STATE_COLORS[state] ?? { text: "#374151", bg: "#e5e7eb" }} />;
 }
 
 export function CategoryBadge({ category }: { category: FollowUpCategory }) {
