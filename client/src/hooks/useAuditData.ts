@@ -80,6 +80,8 @@ function parseFollowUp(row: Record<string, unknown>): FollowUpObservation {
     overdueDays: toNumber(row["عدد أيام التأخر عن الإغلاق"]),
     justification: String(row["مبررات عدم الإغلاق"] ?? "").trim(),
     newClosureDate: String(row["التاريخ الجديد للإغلاق"] ?? "").trim(),
+    responsible: String(row["المسؤول عن التنفيذ"] ?? "").trim(),
+    email: String(row["البريد الإلكتروني"] ?? "").trim(),
   };
 }
 

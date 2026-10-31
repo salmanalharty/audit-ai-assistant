@@ -28,6 +28,8 @@ export interface FollowUpObservation {
   overdueDays: number; // عدد أيام التأخر
   justification: string; // مبررات عدم الإغلاق (أو "غير مبرر" / "—")
   newClosureDate: string; // التاريخ الجديد للإغلاق "Qx YYYY" أو "—"
+  responsible: string; // المسؤول عن تنفيذ الإجراء التصحيحي (في الإدارة المعنية)
+  email: string; // بريد المسؤول — لتوليد مسودات المراسلات
 }
 
 export const OBS_STATUSES: ObsStatus[] = ["مغلقة", "لم تغلق"];
